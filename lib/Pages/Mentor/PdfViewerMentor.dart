@@ -2,26 +2,44 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_plugin_pdf_viewer/flutter_plugin_pdf_viewer.dart';
-class PdfViewer1 extends StatefulWidget{
+
+class PdfViewer1 extends StatefulWidget {
+  String link;
+
+  PdfViewer1(this.link);
+
   @override
   State<StatefulWidget> createState() {
-    return _PdfViewer();
+    return _PdfViewerMentor(link);
   }
 
 }
 int c=0;
-class _PdfViewer extends State<PdfViewer1>{
-  bool _isLoading=false,_isInit=true;
+
+class _PdfViewerMentor extends State<PdfViewer1> {
+  bool _isLoading = false,
+      _isInit = true;
   PDFDocument document;
+  String link;
+
+  _PdfViewerMentor(this.link);
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   void dispose() {
     super.dispose();
-    c=0;
+    c = 0;
   }
+
   @override
   Widget build(BuildContext context) {
-    if(c==0)
+    if (c == 0)
       loadFromAssets();
     return MaterialApp(
       home: Scaffold(
@@ -54,9 +72,10 @@ class _PdfViewer extends State<PdfViewer1>{
     setState(() {
       _isInit = false;
       _isLoading = true;
-      c=1;
+      c = 1;
     });
-    document = await PDFDocument.fromURL("https://docs.google.com/presentation/d/1mSrWMefaIkErR6pG5w42JgDMn_8K4S6CE1QnU0QQWeY/export/pdf");
+    document = await PDFDocument.fromURL(
+        link); //'https://docs.google.com/presentation/d/1mSrWMefaIkErR6pG5w42JgDMn_8K4S6CE1QnU0QQWeY/export/pdf');
     setState(() {
       _isLoading = false;
     });

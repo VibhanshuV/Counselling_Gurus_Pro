@@ -27,43 +27,40 @@ class BranchblogMentor extends StatelessWidget{
       ..add(_BgProps.color2,Color(0xffA83279).tweenTo(Colors.blue.shade600));
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              height: 900,
-              width: double.infinity,
-              child: MirrorAnimation<MultiTweenValues<_BgProps>>(
-                tween: tween,
-                duration: 3.seconds,
-                builder: (context,child,value){
-                  return Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              value.get(_BgProps.color1),
-                              value.get(_BgProps.color2)
-                            ]
-                        )
-                    ),
-                  );
-                },
-              ),
+        body: SingleChildScrollView(
+      child: Stack(
+        children: <Widget>[
+          Container(
+            height: 900,
+            width: double.infinity,
+            child: MirrorAnimation<MultiTweenValues<_BgProps>>(
+              tween: tween,
+              duration: 3.seconds,
+              builder: (context, child, value) {
+                return Container(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                        value.get(_BgProps.color1),
+                        value.get(_BgProps.color2)
+                      ])),
+                );
+              },
             ),
-            gridcard(0, context),
-            gridcard(1, context),
-            gridcard(2, context),
-            gridcard(3, context),
-            gridcard(4, context),
-            gridcard(5, context),
-            gridcard(6, context),
-            gridcard(7, context)
-          ],
-        ),
-      )
-    );
+          ),
+          gridcard(0, context),
+          gridcard(1, context),
+          gridcard(2, context),
+          gridcard(3, context),
+          gridcard(4, context),
+          gridcard(5, context),
+          gridcard(6, context),
+          gridcard(7, context)
+        ],
+      ),
+    ));
   }
 
 }
@@ -72,43 +69,54 @@ Widget gridcard(int index,BuildContext context){
       top: (index*100+100).toDouble(),
       left: 30,
       child:GestureDetector(
-      onTap:(){
-  if(index==0)
-  Navigator.push(context, MaterialPageRoute(builder: (context)=>BranchNameMentor()));
-  if(index==1)
-  Navigator.push(context, MaterialPageRoute(builder: (context)=>BranchNameMentor()));
-  if(index==2)
-  Navigator.push(context, MaterialPageRoute(builder: (context)=>BranchNameMentor()));
-  if(index==3)
-  Navigator.push(context, MaterialPageRoute(builder: (context)=>BranchNameMentor()));
-  if(index==4)
-  Navigator.push(context, MaterialPageRoute(builder: (context)=>BranchNameMentor()));
-  if(index==5)
-  Navigator.push(context, MaterialPageRoute(builder: (context)=>BranchNameMentor()));
-  if(index==6)
-  Navigator.push(context, MaterialPageRoute(builder: (context)=>BranchNameMentor()));
-  if(index==7)
-  Navigator.push(context, MaterialPageRoute(builder: (context)=>BranchNameMentor()));
-
-
-  },
-      child: Container(
-        height: 80,
-        width: MediaQuery.of(context).size.width-60,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
+        onTap: () {
+          if (index == 0)
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => BranchNameMentor()));
+          if (index == 1)
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => BranchNameMentor()));
+          if (index == 2)
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => BranchNameMentor()));
+          if (index == 3)
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => BranchNameMentor()));
+          if (index == 4)
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => BranchNameMentor()));
+          if (index == 5)
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => BranchNameMentor()));
+          if (index == 6)
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => BranchNameMentor()));
+          if (index == 7)
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => BranchNameMentor()));
+        },
+        child: Container(
+          height: 80,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width - 60,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 10,
+              ),
+              Text(branches[index], style: GoogleFonts.aBeeZee(
+                  fontSize: 20, fontWeight: FontWeight.w300),),
+              Text('Few lines about each branch', style: GoogleFonts.aBeeZee(
+                  fontWeight: FontWeight.w100, fontSize: 15),),
+            ],
+          ),
         ),
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 10,
-            ),
-            Text(branches[index],style: GoogleFonts.aBeeZee(fontSize: 20,fontWeight: FontWeight.w300),),
-            Text('Few lines about each branch',style: GoogleFonts.aBeeZee(fontWeight: FontWeight.w100,fontSize: 15),),
-          ],
-        ),
-      ),
-    )
+      )
   );
 }
