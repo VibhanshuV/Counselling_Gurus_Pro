@@ -1,11 +1,13 @@
 import 'dart:convert';
-
+import 'dart:io';
 
 //import 'package:counselling_gurus/Resources/Colors.dart';
 import 'package:counselling_gurus/models/UserModelSignIn.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toast/toast.dart';
 import '../../../Animations/FadeAnimation.dart';
 import 'IntroSlider.dart';
 import '../../../Resources/Colors.dart' as color;
@@ -19,7 +21,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-  bool passwordVisible, validateEmail = false, validatePassword = false;
+  bool passwordVisible,
+      validateEmail = false,
+      validatePassword = false;
   String email, password;
 
   UserSignIn user;
@@ -27,6 +31,13 @@ class _LoginPageState extends State<LoginPage> {
 
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -61,18 +72,29 @@ class _LoginPageState extends State<LoginPage> {
 
   loginUser() async{
     print(user.toJson());
-    await http.post('http://134.209.158.239:4000/auth/loginapp', body: user.toJson(), headers: {"Accept": "application/json"}).then((http.Response response) {
+    final ioc = new HttpClient();
+    ioc.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+    final http = new IOClient(ioc);
+    await http.post(
+        'https://counsellinggurus.in:3001/auth/login', body: user.toJson(),
+        headers: {"Accept": "application/json"}).then((response) {
       final String res = response.body;
       final int statusCode = response.statusCode;
       if (statusCode < 200 || statusCode > 400 || json == null) {
         throw new Exception("Error while fetching data");
-      }else{
-        print("Login Entered");
-        Navigator.push(context, MaterialPageRoute(builder: (context) => IntroSlider()));
+      } else {
+        Toast.show("Login Successful!", context, duration: Toast.LENGTH_LONG);
+        Navigator.pushAndRemoveUntil(
+          context, MaterialPageRoute(builder: (context) => IntroSlider()), (
+            route) => false,);
+        addToSF();
       }
       print(jsonDecoder.convert(res));
       return jsonDecoder.convert(res);
-    });
+    }).catchError((error) =>
+        Toast.show(
+            "User Not Registered!", context, duration: Toast.LENGTH_LONG));
   }
 
   addToSF() async{
@@ -247,28 +269,32 @@ class _LoginPageState extends State<LoginPage> {
                                               BorderRadius.circular(50),
                                           color: color.buttonsMain),
                                       child: InkWell(
-                                        onTap: () {
+                                        onTap: () async {
                                           FormState formState =
                                               _formkey.currentState;
                                           if (formState.validate()) {
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => IntroSlider()));
-//                                            setState(() {
-//                                              emailController.text.isEmpty
-//                                                  ? validateEmail = true
-//                                                  : validateEmail = false;
-//                                              passwordController.text.isEmpty
-//                                                  ? validatePassword = true
-//                                                  : validatePassword = false;
-//                                              email = emailController.text
-//                                                  .toString();
-//                                              password = passwordController.text
-//                                                  .toString();
-//                                              user = new UserSignIn(
-//                                                  email: email,
-//                                                  password: password);
-//                                            });
-//                                            addToSF();
-//                                            loginUser();
+                                            var email = emailController.text;
+                                            var password = passwordController
+                                                .text;
+                                            // Navigator.push(context, MaterialPageRoute(builder: (context) => IntroSlider()));
+                                            setState(() {
+                                              // message = 'Please Wait..';
+
+                                              emailController.text.isEmpty
+                                                  ? validateEmail = true
+                                                  : validateEmail = false;
+                                              passwordController.text.isEmpty
+                                                  ? validatePassword = true
+                                                  : validatePassword = false;
+                                              email = emailController.text
+                                                  .toString();
+                                              password = passwordController.text
+                                                  .toString();
+                                              user = new UserSignIn(
+                                                  email: email,
+                                                  password: password);
+                                            });
+                                            loginUser();
                                           }
                                         },
                                         child: Center(

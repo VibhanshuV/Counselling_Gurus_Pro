@@ -9,13 +9,20 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../Resources/Colors.dart' as color;
 List<String> _years = ['Fresher','Sophomore','Pre-final Year','Final Year'];
 String Selectedyear;
-class MentorInfoMentor extends StatefulWidget{
+class MentorInfoMentor extends StatefulWidget {
+  List<String> page1datal;
+  var page1data;
+
+  MentorInfoMentor(this.page1data);
+
   @override
-  _MentorInfoMentor createState()=>_MentorInfoMentor();
+  _MentorInfoMentor createState() => _MentorInfoMentor();
 }
+
 class _MentorInfoMentor extends State<MentorInfoMentor>{
   TextEditingController _controller = new TextEditingController();
   TextEditingController _controller1 = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
