@@ -3,6 +3,7 @@
 import 'package:counselling_gurus/Pages/Mentor/Fragments/StudentsList.dart';
 import 'package:counselling_gurus/components/oval_right_clipper.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:titled_navigation_bar/titled_navigation_bar.dart';
 import 'Fragments/HomePageMentor.dart';
 import 'package:flutter/material.dart';
@@ -175,10 +176,12 @@ class _MainPageMentorState extends State<MainPageMentor> {
               });
             },
             items: [
-              TitledNavigationBarItem(title: Text('Profile'), icon: Icons.person),
+              TitledNavigationBarItem(
+                  title: Text('Profile'), icon: MdiIcons.accountTie),
               TitledNavigationBarItem(title: Text('Home'), icon: Icons.home),
               TitledNavigationBarItem(title: Text('News'), icon: Icons.receipt),
-              TitledNavigationBarItem(title: Text('Students'), icon: Icons.question_answer),
+              TitledNavigationBarItem(
+                  title: Text('Students'), icon: MdiIcons.accountQuestion),
             ]
         )
 //      bottomNavigationBar: BottomNavigationBar(

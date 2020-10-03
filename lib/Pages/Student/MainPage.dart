@@ -2,6 +2,7 @@
 //import 'file:///C:/Users/Ralex/Desktop/Counselling_Gurus/lib/Pages/Student/Fragments/ChatBoxPage.dart';
 import 'package:counselling_gurus/Pages/Student/Fragments/NewsPage.dart';
 import 'package:counselling_gurus/Pages/Student/Fragments/ProfilePage.dart';
+import 'package:counselling_gurus/Pages/Student/Fragments/AssignedMentorPage.dart';
 import 'package:counselling_gurus/Pages/Student/SideNav/feedback.dart';
 import 'package:counselling_gurus/components/oval_right_clipper.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,6 +32,7 @@ class _MainPageState extends State<MainPage> {
     ProfilePage(),
     HomePage(),
     NewsPage(),
+    AssignedMentorPage(),
     //ChatBoxPage(),
   ];
   var _pageController = new PageController();
@@ -216,7 +218,10 @@ class _MainPageState extends State<MainPage> {
               TitledNavigationBarItem(
                   title: Text('Profile'), icon: Icons.person),
               TitledNavigationBarItem(title: Text('Home'), icon: Icons.home),
-              TitledNavigationBarItem(title: Text('News'), icon: Icons.call),
+              TitledNavigationBarItem(
+                  title: Text('News'), icon: MdiIcons.newspaper),
+              TitledNavigationBarItem(
+                  title: Text('Mentor'), icon: MdiIcons.accountTie)
 //              TitledNavigationBarItem(
 //                  title: Text('Chat'), icon: Icons.question_answer),
             ])

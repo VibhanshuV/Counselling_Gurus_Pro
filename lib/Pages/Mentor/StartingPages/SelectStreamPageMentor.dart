@@ -85,7 +85,12 @@ class _StreamSelectPageStateMentor extends State<StreamSelectPageMentor> {
                                           builder: (context) => MainPageMentor()));
                                     },
                                     child: Center(
-                                      child: Text("An Engineering Aspirant", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                                      child: Text(
+                                        "An Engineering Mentor",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -106,7 +111,9 @@ class _StreamSelectPageStateMentor extends State<StreamSelectPageMentor> {
                                       Navigator.push(context,MaterialPageRoute(builder: (context)=> MainPageMentor()));
                                     },
                                     child: Center(
-                                      child: Text("A Medical Aspirant", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                                      child: Text("A Medical Mentor",
+                                        style: TextStyle(color: Colors.white,
+                                            fontWeight: FontWeight.bold),),
                                     ),
                                   ),
                                 ),
