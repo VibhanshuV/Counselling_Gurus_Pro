@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:toast/toast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class AboutMentee extends StatelessWidget{
+class AboutMentee extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,14 +13,15 @@ class AboutMentee extends StatelessWidget{
           children: <Widget>[
             Stack(
               children: <Widget>[
-
                 Padding(
                   padding: EdgeInsets.only(left: 10,right: 10,bottom: 10),
                   child: Container(
                     width: MediaQuery.of(context).size.width-20,
                     decoration: BoxDecoration(
                       color: Colors.lightBlueAccent,
-                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(50),bottomLeft: Radius.circular(50)),
+                      borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(80),
+                          bottomLeft: Radius.circular(80)),
                     ),
                     child: Column(
                       children: <Widget>[
@@ -30,10 +33,11 @@ class AboutMentee extends StatelessWidget{
                             height: 150,
                             width: 150,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              image: DecorationImage(
-                                image: AssetImage("assets/images/profile.png")
-                              )
+                                borderRadius: BorderRadius.circular(100),
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        "assets/images/profile.png")
+                                )
                             ),
                           ),
                         ),
@@ -81,7 +85,10 @@ class AboutMentee extends StatelessWidget{
               color: Colors.grey.shade300,
             ),
             GestureDetector(
-              onTap: (){
+              onTap: () {
+                Toast.show(
+                    "Coming Soon! Use Chat!", context,
+                    duration: Toast.LENGTH_LONG);
                 return null;
               },
               child: ListTile(
@@ -98,6 +105,7 @@ class AboutMentee extends StatelessWidget{
             ),
             GestureDetector(
               onTap: (){
+                _launchURL("https://t.me/joinchat/AAAAAFcS7GP9ys7r7q-iVw");
                 return null;
               },
               child: ListTile(
@@ -164,7 +172,10 @@ class AboutMentee extends StatelessWidget{
             ),
             Container(
               height: 2,
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
               color: Colors.grey.shade300,
             ),
           ],
@@ -173,4 +184,12 @@ class AboutMentee extends StatelessWidget{
     );
   }
 
+}
+
+void _launchURL(url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
 }

@@ -6,13 +6,69 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:counselling_gurus/Pages/Student/HomePageSources/Plan.dart';
 import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+final int lT = 0xFFD5D3E0; //light color
+final int dT = 0xFF000000; //dark text
+final List<Plan> plans = [
+  Plan(
+      "Starter",
+      [
+        "Choice Filling",
+        "Mentoring Sessions",
+        "Live Chat",
+        "Career Guidance",
+        "Previous Year Stats",
+        "Branch-College Dilemma",
+        "Video Support",
+        "-"
+      ],
+      "₹1598/-",
+      "₹799",
+      "50%"),
+  Plan(
+      "Standard",
+      [
+        "Choice Filling",
+        "Personal Mentoring",
+        "Video+Chat Support",
+        "Career Guidance",
+        "Previous Year Stats",
+        "College Placement Stats",
+        "Spot Round",
+        "-"
+      ],
+      "₹2998/-",
+      "₹1499",
+      "50%"),
+  Plan(
+      "Enhanced",
+      [
+        "Choice Filling",
+        "IITian Mentors",
+        "1-on-1 Video Sessions",
+        "Career Guidance",
+        "Placement Stats",
+        "State+JOSSA Counselling",
+        "Spot Round",
+        "-"
+      ],
+      "₹4998/-",
+      "₹2499",
+      "50%")
+];
+final List<List<int>> featColor = [
+  [dT, dT, dT, dT, dT, dT],
+  [dT, dT, dT, lT, lT, lT],
+  [dT, dT, dT, dT, dT, dT]
+];
 
-
-final int lT  = 0xFFD5D3E0;  //light color
-final int dT = 0xFF000000;   //dark text
-final List<Plan> plans = [Plan("Starter",["Choice Filling","Mentoring Sessions","Live Chat","Career Guidance","Previous Year Stats","Branch-College Dilemma","Video Support","-"],"₹1598/-","₹799","50%"), Plan("Standard",["Choice Filling","Personal Mentoring","Video+Chat Support","Career Guidance","Previous Year Stats","College Placement Stats","Spot Round","-"],"₹2998/-","₹1499","50%"), Plan("Enhanced",["Choice Filling","IITian Mentors","1-on-1 Video Sessions","Career Guidance","Placement Stats","State+JOSSA Counselling","Spot Round","-"],"₹4998/-","₹2499","50%")];
-final List<List<int>> featColor = [[dT,dT,dT,dT,dT,dT],[dT,dT,dT,lT,lT,lT],[dT,dT,dT,dT,dT,dT]];
+final List<String> plansUrl = [
+  'https://rzp.io/l/CGstarter',
+  'https://rzp.io/l/CGstandard',
+  'https://rzp.io/l/CGenhanced',
+  'https://rzp.io/l/CGpremium'
+];
 
 class Plans extends StatelessWidget {
   // List<String> plans = ["Starter","Standard","Enhanced","Premium"];
@@ -20,11 +76,10 @@ class Plans extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFF8F4FF),
-        body: CustomScrollView(
-          scrollDirection: Axis.horizontal,
-          slivers: <Widget>[
-            SliverAppBar(
-              leading: BackButton(color: Color(0xFFFF4E00),),
+      body:
+          CustomScrollView(scrollDirection: Axis.horizontal, slivers: <Widget>[
+        SliverAppBar(
+          leading: BackButton(color: Color(0xFFFF4E00),),
               backgroundColor: Color(0xFFF8F4FF),
               expandedHeight: 250,
               flexibleSpace: FlexibleSpaceBar(
@@ -248,10 +303,7 @@ Widget _plansCardView(BuildContext context, int index) {
                       color: Color(0xFFFF4E00),
                       shape: new RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))  ,
                       onPressed: () {
-                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => AfterPlans(index)),
-                                        );
+                        _launchURL(plansUrl[index]);
                       },
 
                     ),
@@ -259,17 +311,24 @@ Widget _plansCardView(BuildContext context, int index) {
                 ]
               ),
             ),
-          elevation: 3,
-        ),
-      )
-      ) ;
+            elevation: 3,
+          ),
+          )
+      );
+}
 
-    }
+void _launchURL(url) async {
+  if (await canLaunch(url)) {
+    var bool = await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 
 Widget _premiumCardView(BuildContext context) {
   return Container(
       child: GestureDetector(
-        onLongPress:() {
+        onLongPress: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => AfterPlans(5)),
@@ -455,10 +514,7 @@ Widget _premiumCardView(BuildContext context) {
                       color: Color(0xFF8645FF),
                       shape: new RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))  ,
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => AfterPlans(3)),
-                        );
+                        _launchURL("https://rzp.io/l/CGpremium");
                       },
 
                     ),

@@ -70,100 +70,89 @@ class _ProfilePageMentorState extends State<ProfilePageMentor> {
       ),
     ):*/
     new Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 380,
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    height: 300,
+            body: SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Container(
+            height: 350,
+            child: Stack(
+              children: <Widget>[
+                Container(
+                    height: 320,
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [
-                            color.bgGrad,
-                            color.bgGrad1,
-                            color.bgGrad2,
-                            color.bgGrad3
-                          ],
-                          stops: [0.2,0.5,0.7,1],
-                        )
-                    ),
-                  ),
-                  Positioned(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width / 1.2,
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height / 3.5,
-                    top: MediaQuery
-                        .of(context)
-                        .size
-                        .height / 7,
-                    left: MediaQuery
-                        .of(context)
-                        .size
-                        .width / 11,
-                    child: Material(
-                      elevation: 30,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: 70,
+                            begin: Alignment.topCenter,
+                            colors: [
+                          color.bgGrad,
+                          color.bgGrad1,
+                          color.bgGrad2,
+                          color.bgGrad3
+                        ]))),
+                Positioned(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  height: MediaQuery.of(context).size.height / 3.2,
+                  top: MediaQuery.of(context).size.height / 9,
+                  left: MediaQuery.of(context).size.width / 11,
+                  child: Material(
+                    elevation: 30,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 60,
                           ),
                           ListTile(
                             title:Center(
-                              child: Text('name' ,style: GoogleFonts.aBeeZee(fontSize: 20,fontWeight: FontWeight.bold),),
+                              child: Text("name", style: GoogleFonts.aBeeZee(
+                                  fontSize: 20, fontWeight: FontWeight.bold),),
                             ),
                             subtitle: Center(
                               child: Text('City,State',style: GoogleFonts.aBeeZee(fontSize: 15,fontWeight: FontWeight.w300),),
                             ),
 
                           ),
-                          ListTile(
-                            title: Text('This is where we can put a few lines of bio which user will input.',style: GoogleFonts.aBeeZee(fontSize: 15,fontWeight: FontWeight.w300),),
-                            contentPadding: EdgeInsets.only(left: 50,right: 50),
+                            ListTile(
+                              title: Text(
+                                'This is where we can put a few lines of bio which user will input.',
+                                style: GoogleFonts.aBeeZee(fontSize: 15,
+                                    fontWeight: FontWeight.w300),),
+                              contentPadding: EdgeInsets.only(
+                                  left: 50, right: 50),
 
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width / 3,
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .width / 3,
-                    top: MediaQuery
-                        .of(context)
-                        .size
-                        .height / 16,
-                    left: MediaQuery
-                        .of(context)
-                        .size
-                        .width / 3 ,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        shape: BoxShape.rectangle,
-                        image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image: AssetImage('assets/images/profile.png')),
+                    Positioned(
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width / 3,
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .width / 3,
+                      top: MediaQuery
+                          .of(context)
+                          .size
+                          .height / 36,
+                      left: MediaQuery
+                          .of(context)
+                          .size
+                          .width / 3,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(80)),
+                          shape: BoxShape.rectangle,
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: AssetImage('assets/images/profile.png')),
+                        ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
               ),
             ),
             Padding(

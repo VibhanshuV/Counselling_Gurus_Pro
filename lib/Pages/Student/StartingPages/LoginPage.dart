@@ -270,32 +270,37 @@ class _LoginPageState extends State<LoginPage> {
                                           color: color.buttonsMain),
                                       child: InkWell(
                                         onTap: () async {
-                                          FormState formState =
-                                              _formkey.currentState;
-                                          if (formState.validate()) {
-                                            var email = emailController.text;
-                                            var password = passwordController
-                                                .text;
-                                            // Navigator.push(context, MaterialPageRoute(builder: (context) => IntroSlider()));
-                                            setState(() {
-                                              // message = 'Please Wait..';
-
-                                              emailController.text.isEmpty
-                                                  ? validateEmail = true
-                                                  : validateEmail = false;
-                                              passwordController.text.isEmpty
-                                                  ? validatePassword = true
-                                                  : validatePassword = false;
-                                              email = emailController.text
-                                                  .toString();
-                                              password = passwordController.text
-                                                  .toString();
-                                              user = new UserSignIn(
-                                                  email: email,
-                                                  password: password);
-                                            });
-                                            loginUser();
-                                          }
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      IntroSlider()));
+                                          // FormState formState =
+                                          //     _formkey.currentState;
+                                          // if (formState.validate()) {
+                                          //   var email = emailController.text;
+                                          //   var password = passwordController
+                                          //       .text;
+                                          //   // Navigator.push(context, MaterialPageRoute(builder: (context) => IntroSlider()));
+                                          //   setState(() {
+                                          //     // message = 'Please Wait..';
+                                          //
+                                          //     emailController.text.isEmpty
+                                          //         ? validateEmail = true
+                                          //         : validateEmail = false;
+                                          //     passwordController.text.isEmpty
+                                          //         ? validatePassword = true
+                                          //         : validatePassword = false;
+                                          //     email = emailController.text
+                                          //         .toString();
+                                          //     password = passwordController.text
+                                          //         .toString();
+                                          //     user = new UserSignIn(
+                                          //         email: email,
+                                          //         password: password);
+                                          //   });
+                                          //   loginUser();
+                                          // }
                                         },
                                         child: Center(
                                           child: Text(

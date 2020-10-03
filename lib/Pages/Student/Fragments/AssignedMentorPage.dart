@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:toast/toast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AssignedMentorPage extends StatelessWidget {
   @override
@@ -18,20 +20,20 @@ class AssignedMentorPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.lightBlueAccent,
                         borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(50),
-                            bottomLeft: Radius.circular(50)),
+                            bottomRight: Radius.circular(80),
+                            bottomLeft: Radius.circular(80)),
                       ),
                       child: Column(
                         children: <Widget>[
                           SizedBox(
-                            height: 80,
+                            height: 60,
                           ),
                           Center(
                             child: Container(
                               height: 150,
                               width: 150,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
+                                  borderRadius: BorderRadius.circular(100),
                                   image: DecorationImage(
                                       image: AssetImage(
                                           "assets/images/profile.png"))),
@@ -42,7 +44,7 @@ class AssignedMentorPage extends StatelessWidget {
                           ),
                           Center(
                             child: Text(
-                              "Mentee Name",
+                              "Mentor Name",
                               style: GoogleFonts.aBeeZee(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w300,
@@ -51,25 +53,7 @@ class AssignedMentorPage extends StatelessWidget {
                           ),
                           Center(
                             child: Text(
-                              "Category",
-                              style: GoogleFonts.aBeeZee(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w200,
-                                  color: Colors.white),
-                            ),
-                          ),
-                          Center(
-                            child: Text(
-                              "General Rank",
-                              style: GoogleFonts.aBeeZee(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w200,
-                                  color: Colors.white),
-                            ),
-                          ),
-                          Center(
-                            child: Text(
-                              "Category Rank",
+                              "Current Post",
                               style: GoogleFonts.aBeeZee(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w200,
@@ -94,15 +78,6 @@ class AssignedMentorPage extends StatelessWidget {
                                   color: Colors.white),
                             ),
                           ),
-                          Center(
-                            child: Text(
-                              "Plan Opted",
-                              style: GoogleFonts.aBeeZee(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w200,
-                                  color: Colors.white),
-                            ),
-                          ),
                           SizedBox(
                             height: 20,
                           )
@@ -121,13 +96,15 @@ class AssignedMentorPage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
+                Toast.show("Coming Soon! Use Chat!", context,
+                    duration: Toast.LENGTH_LONG);
                 return null;
               },
               child: ListTile(
                 contentPadding: EdgeInsets.only(left: 30, right: 30),
                 leading: Icon(Icons.event),
                 title: Text(
-                  "Schedule Video Meeting",
+                  "Request Video Meeting",
                   style: GoogleFonts.aBeeZee(
                       fontSize: 20, fontWeight: FontWeight.w300),
                 ),
@@ -141,7 +118,7 @@ class AssignedMentorPage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                return null;
+                _launchURL("https://t.me/joinchat/AAAAAFcS7GP9ys7r7q-iVw");
               },
               child: ListTile(
                 contentPadding: EdgeInsets.only(left: 30, right: 30),
@@ -188,7 +165,7 @@ class AssignedMentorPage extends StatelessWidget {
                                     fontWeight: FontWeight.w200, fontSize: 18),
                                 decoration: InputDecoration(
                                   hintText:
-                                      "Let us know more about the mentee assigned to you",
+                                  "Let us know more about the mentor assigned to you",
                                   hintStyle: GoogleFonts.aBeeZee(
                                       fontWeight: FontWeight.w200,
                                       fontSize: 18),
@@ -219,12 +196,23 @@ class AssignedMentorPage extends StatelessWidget {
             ),
             Container(
               height: 2,
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
               color: Colors.grey.shade300,
             ),
           ],
         ),
       ),
     );
+  }
+}
+
+void _launchURL(url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }
