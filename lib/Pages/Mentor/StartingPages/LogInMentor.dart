@@ -171,68 +171,71 @@ class _LoginMentorState extends State<LogInMentor> {
                                   offset: Offset(0, 10)
                               )]
                           ),
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    border: Border(bottom: BorderSide(
-                                        color: Colors.grey[200]))
+                          child: Form(
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      border: Border(bottom: BorderSide(
+                                          color: Colors.grey[200]))
+                                  ),
+                                  child: TextFormField(
+                                    validator: emailValidator,
+                                    controller: emailController,
+                                    decoration: InputDecoration(
+                                        prefixIcon: Icon(Icons.email),
+                                        errorText: validateEmail
+                                            ? "Email can't be empty"
+                                            : null,
+                                        hintText: "Email",
+                                        hintStyle:
+                                        TextStyle(color: Colors.grey),
+                                        border: InputBorder.none),
+                                  ),
                                 ),
-                                child: TextFormField(
-                                  validator: emailValidator,
-                                  controller: emailController,
-                                  decoration: InputDecoration(
-                                      prefixIcon: Icon(Icons.email),
-                                      errorText: validateEmail
-                                          ? "Email can't be empty"
-                                          : null,
-                                      hintText: "Email",
-                                      hintStyle:
-                                      TextStyle(color: Colors.grey),
-                                      border: InputBorder.none),
+                                Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      border: Border(bottom: BorderSide(
+                                          color: Colors.grey[200]))
+                                  ),
+                                  child: TextFormField(
+                                    validator: pwdValidator,
+                                    controller: passwordController,
+                                    obscureText: !passwordVisible,
+                                    decoration: InputDecoration(
+                                        prefixIcon:
+                                        Icon(Icons.lock_outline),
+                                        errorText: validatePassword
+                                            ? "Password can't be empty"
+                                            : null,
+                                        hintText: "Password",
+                                        hintStyle:
+                                        TextStyle(color: Colors.grey),
+                                        border: InputBorder.none,
+                                        suffixIcon: IconButton(
+                                          icon: Icon(
+                                            passwordVisible
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                            color: Theme
+                                                .of(context)
+                                                .primaryColorDark,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              passwordVisible =
+                                              !passwordVisible;
+                                            });
+                                          },
+                                        )),
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    border: Border(bottom: BorderSide(
-                                        color: Colors.grey[200]))
-                                ),
-                                child: TextFormField(
-                                  validator: pwdValidator,
-                                  controller: passwordController,
-                                  obscureText: !passwordVisible,
-                                  decoration: InputDecoration(
-                                      prefixIcon:
-                                      Icon(Icons.lock_outline),
-                                      errorText: validatePassword
-                                          ? "Password can't be empty"
-                                          : null,
-                                      hintText: "Password",
-                                      hintStyle:
-                                      TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
-                                      suffixIcon: IconButton(
-                                        icon: Icon(
-                                          passwordVisible
-                                              ? Icons.visibility
-                                              : Icons.visibility_off,
-                                          color: Theme
-                                              .of(context)
-                                              .primaryColorDark,
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            passwordVisible =
-                                            !passwordVisible;
-                                          });
-                                        },
-                                      )),
-                                ),
-                              ),
-                            ],
-                          ),
+                              ],
+                            ),
+                              key: _formkey,
+                          )
                         )),
                         SizedBox(height: 40,),
                         InkWell(
@@ -253,9 +256,8 @@ class _LoginMentorState extends State<LogInMentor> {
                                       ),
                                       child: InkWell(
                                         onTap: () async {
-                                          FormState formState =
-                                              _formkey.currentState;
-                                          // if (formState.validate()) {
+                                          FormState formState = _formkey.currentState;
+                                           if (_formkey.currentState.validate()) {
                                           var email = emailController.text;
                                           var password = passwordController
                                               .text;
@@ -276,7 +278,7 @@ class _LoginMentorState extends State<LogInMentor> {
                                                 password: password);
                                           });
                                           loginUser();
-                                          // }
+                                           }
                                           // Navigator.push(context, MaterialPageRoute(builder: (context) => IntroSliderMentor()));//remove this when backend fixed
                                         },
 
