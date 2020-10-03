@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 class MentorSignUp {
   String name,
       email,
-      password,
       contact,
       branch,
       college,

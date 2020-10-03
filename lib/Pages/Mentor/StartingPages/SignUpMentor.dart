@@ -337,10 +337,9 @@ signUpUser() async{
                                   ),
                                   child: InkWell(
                                     onTap: () {
-                                      List<String> page1data = [
+                                      var page1data = [
                                         emailController.text.toString(),
-                                        aadharController.text.toString()
-                                        ,
+                                        aadharController.text.toString(),
                                         nameController.text.toString(),
                                         contactController.text.toString(),
                                         collegeIdController.text.toString()

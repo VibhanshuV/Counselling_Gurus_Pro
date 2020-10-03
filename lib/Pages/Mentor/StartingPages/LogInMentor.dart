@@ -1,13 +1,20 @@
 //import 'dart:convert';
 
 //import 'package:counselling_gurus/models/UserModelSignIn.dart';
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:counselling_gurus/Pages/Mentor/StartingPages/IntroSlider.dart';
 import 'package:counselling_gurus/Pages/Mentor/StartingPages/OTPVerificationPageMentor.dart';
+import 'package:counselling_gurus/models/MentorModelSignIn.dart';
 import 'package:flutter/material.dart';
-//import 'package:http/http.dart' as http;
-//import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toast/toast.dart';
 import '../../../Animations/FadeAnimation.dart';
-//import 'MentorInfoMentor.dart';
+
+// import 'MentorInfoMentor.dart';
 //import 'file:///C:/Users/Ralex/Desktop/Counselling_Gurus/lib/Pages/Mentor/StartingPages/SignUpMentor.dart';
 import '../../../Resources/Colors.dart' as color;
 import 'SignUpMentor.dart';
@@ -18,15 +25,22 @@ class LogInMentor extends StatefulWidget {
 }
 
 class _LoginMentorState extends State<LogInMentor> {
-
- /* bool passwordVisible, validateEmail = false, validatePassword = false;
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  bool passwordVisible, validateEmail = false, validatePassword = false;
   String email, password;
 
-  UserSignIn user;
+  MentorSignIn user;
   JsonDecoder jsonDecoder = new JsonDecoder();
 
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -34,19 +48,57 @@ class _LoginMentorState extends State<LogInMentor> {
     passwordVisible = false;
   }
 
-  loginUser() async{
+  String emailValidator(String value) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+    if (value.isEmpty) {
+      return "Email can't be empty";
+    }
+    if (!regex.hasMatch(value)) {
+      return 'Email format is invalid';
+    } else {
+      return null;
+    }
+  }
+
+  String pwdValidator(String value) {
+    if (value.isEmpty) {
+      return "Password can't be empty";
+    }
+    if (value.length < 8) {
+      return 'Password must be longer than 8 characters';
+    } else {
+      return null;
+    }
+  }
+
+  loginUser() async {
     print(user.toJson());
-    await http.post('http://192.168.43.70:3060/postloginapp', body: user.toJson(), headers: {"Accept": "application/json"}).then((http.Response response) {
+    final ioc = new HttpClient();
+    ioc.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+    final http = new IOClient(ioc);
+    await http.post('https://counsellinggurus.in:3001/mentor/auth/login',
+        body: user.toJson(),
+        headers: {"Accept": "application/json"}).then((response) {
       final String res = response.body;
       final int statusCode = response.statusCode;
       if (statusCode < 200 || statusCode > 400 || json == null) {
         throw new Exception("Error while fetching data");
-      }else{
-        Navigator.push(context, MaterialPageRoute(builder: (context) => IntroSlider()));
+      } else {
+        Toast.show("Login Successful!", context, duration: Toast.LENGTH_LONG);
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => IntroSliderMentor()),
+          (route) => false,
+        );
+        addToSF();
       }
       print(jsonDecoder.convert(res));
       return jsonDecoder.convert(res);
-    });
+    }).catchError((error) => Toast.show("User Not Registered!", context,
+        duration: Toast.LENGTH_LONG));
   }
 
   addToSF() async{
@@ -54,7 +106,6 @@ class _LoginMentorState extends State<LogInMentor> {
     pref.setString("email", emailController.text.toString());
     pref.setString("password", passwordController.text.toString());
   }
-*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,45 +176,59 @@ class _LoginMentorState extends State<LogInMentor> {
                               Container(
                                 padding: EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
+                                    border: Border(bottom: BorderSide(
+                                        color: Colors.grey[200]))
                                 ),
-                                child: TextField(
-                                //  controller: emailController,
+                                child: TextFormField(
+                                  validator: emailValidator,
+                                  controller: emailController,
                                   decoration: InputDecoration(
-                                  //    errorText: validateEmail ? "Email can't be empty": null,
+                                      prefixIcon: Icon(Icons.email),
+                                      errorText: validateEmail
+                                          ? "Email can't be empty"
+                                          : null,
                                       hintText: "Email",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none
-                                  ),
+                                      hintStyle:
+                                      TextStyle(color: Colors.grey),
+                                      border: InputBorder.none),
                                 ),
                               ),
                               Container(
                                 padding: EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                    border: Border(bottom: BorderSide(color: Colors.grey[200]))
+                                    border: Border(bottom: BorderSide(
+                                        color: Colors.grey[200]))
                                 ),
-                                child: TextField(
-                                  //controller: passwordController,
-                                  //obscureText: !passwordVisible,
+                                child: TextFormField(
+                                  validator: pwdValidator,
+                                  controller: passwordController,
+                                  obscureText: !passwordVisible,
                                   decoration: InputDecoration(
-                                    //  errorText: validatePassword ? "Password can't be empty": null,
+                                      prefixIcon:
+                                      Icon(Icons.lock_outline),
+                                      errorText: validatePassword
+                                          ? "Password can't be empty"
+                                          : null,
                                       hintText: "Password",
-                                      hintStyle: TextStyle(color: Colors.grey),
+                                      hintStyle:
+                                      TextStyle(color: Colors.grey),
                                       border: InputBorder.none,
                                       suffixIcon: IconButton(
                                         icon: Icon(
-                                      //    passwordVisible?
-                                       //   Icons.visibility:
-                                          Icons.visibility_off,
-                                          color: Theme.of(context).primaryColorDark,
+                                          passwordVisible
+                                              ? Icons.visibility
+                                              : Icons.visibility_off,
+                                          color: Theme
+                                              .of(context)
+                                              .primaryColorDark,
                                         ),
-                                        onPressed: (){
+                                        onPressed: () {
                                           setState(() {
-                                          //  passwordVisible = !passwordVisible;
+                                            passwordVisible =
+                                            !passwordVisible;
                                           });
                                         },
-                                      )
-                                  ),
+                                      )),
                                 ),
                               ),
                             ],
@@ -187,21 +252,39 @@ class _LoginMentorState extends State<LogInMentor> {
                                           color: color.buttonsMain
                                       ),
                                       child: InkWell(
-                                        onTap: () {
-                                          Navigator.push(context, MaterialPageRoute(builder: (context) => IntroSliderMentor()));//remove this when backend fixed
-                                        },
-                                          /*setState(() {
-                                            emailController.text.isEmpty ? validateEmail = true: validateEmail = false;
-                                            passwordController.text.isEmpty ? validatePassword = true: validatePassword = false;
-                                            email = emailController.text.toString();
-                                            password = passwordController.text.toString();
-                                            user = new UserSignIn(email: email, password: password);
+                                        onTap: () async {
+                                          FormState formState =
+                                              _formkey.currentState;
+                                          // if (formState.validate()) {
+                                          var email = emailController.text;
+                                          var password = passwordController
+                                              .text;
+
+                                          setState(() {
+                                            emailController.text.isEmpty
+                                                ? validateEmail = true
+                                                : validateEmail = false;
+                                            passwordController.text.isEmpty
+                                                ? validatePassword = true
+                                                : validatePassword = false;
+                                            email = emailController.text
+                                                .toString();
+                                            password = passwordController.text
+                                                .toString();
+                                            user = new MentorSignIn(
+                                                email: email,
+                                                password: password);
                                           });
-                                          addToSF();
                                           loginUser();
-                                        },*/
+                                          // }
+                                          // Navigator.push(context, MaterialPageRoute(builder: (context) => IntroSliderMentor()));//remove this when backend fixed
+                                        },
+
                                         child: Center(
-                                          child: Text("Log In", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                                          child: Text("Log In",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold),),
                                         ),
                                       ),
                                     ),
