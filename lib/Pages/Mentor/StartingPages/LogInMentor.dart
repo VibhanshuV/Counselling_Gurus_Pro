@@ -257,36 +257,36 @@ class _LoginMentorState extends State<LogInMentor> {
                                       ),
                                       child: InkWell(
                                         onTap: () async {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      IntroSliderMentor()));
-                                          // FormState formState = _formkey
-                                          //     .currentState;
-                                          // if (_formkey.currentState
-                                          //     .validate()) {
-                                          //   var email = emailController.text;
-                                          //   var password = passwordController
-                                          //       .text;
-                                          //
-                                          //   setState(() {
-                                          //     emailController.text.isEmpty
-                                          //         ? validateEmail = true
-                                          //         : validateEmail = false;
-                                          //     passwordController.text.isEmpty
-                                          //         ? validatePassword = true
-                                          //         : validatePassword = false;
-                                          //     email = emailController.text
-                                          //         .toString();
-                                          //     password = passwordController.text
-                                          //         .toString();
-                                          //     user = new MentorSignIn(
-                                          //         email: email,
-                                          //         password: password);
-                                          //   });
-                                          //   loginUser();
-                                          // }
+                                          // Navigator.push(
+                                          //     context,
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             IntroSliderMentor()));
+                                          FormState formState =
+                                              _formkey.currentState;
+                                          if (_formkey.currentState
+                                              .validate()) {
+                                            var email = emailController.text;
+                                            var password =
+                                                passwordController.text;
+
+                                            setState(() {
+                                              emailController.text.isEmpty
+                                                  ? validateEmail = true
+                                                  : validateEmail = false;
+                                              passwordController.text.isEmpty
+                                                  ? validatePassword = true
+                                                  : validatePassword = false;
+                                              email = emailController.text
+                                                  .toString();
+                                              password = passwordController.text
+                                                  .toString();
+                                              user = new MentorSignIn(
+                                                  email: email,
+                                                  password: password);
+                                            });
+                                            loginUser();
+                                          }
                                           // Navigator.push(context, MaterialPageRoute(builder: (context) => IntroSliderMentor()));//remove this when backend fixed
                                         },
 

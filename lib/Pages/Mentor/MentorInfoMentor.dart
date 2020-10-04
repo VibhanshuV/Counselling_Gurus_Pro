@@ -259,9 +259,36 @@ class _MentorInfoMentor extends State<MentorInfoMentor> {
                           college: college,
                           collegeId: collegeId,
                           aadhar: aadhar,
-                          yearOfStudy: yearOfStudy,);
+                          yearOfStudy: yearOfStudy,
+                        );
                       });
                       signUpUser();
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return StatefulBuilder(
+                              builder: (context, setState) {
+                                return Scaffold(
+                                    backgroundColor: Colors.transparent,
+                                    body: Center(
+                                      child: Container(
+                                        width: 250,
+                                        color: Colors.deepOrangeAccent,
+                                        child: Padding(
+                                          padding: EdgeInsets.all(20),
+                                          child: Text(
+                                            "You have applied successfully. The Admin will contact you soon after which you will be given your Log-in id and Password. Thank You for being patient.",
+                                            style: GoogleFonts.aBeeZee(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w300),
+                                          ),
+                                        ),
+                                      ),
+                                    ));
+                              },
+                            );
+                          });
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
