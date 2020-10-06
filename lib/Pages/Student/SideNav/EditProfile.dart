@@ -2,10 +2,39 @@ import 'package:counselling_gurus/Resources/Colors.dart' as color;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toast/toast.dart';
 
 
 
-class EditProfile extends StatelessWidget{
+class EditProfile extends StatefulWidget{
+  @override
+  _EditProfileState createState() => _EditProfileState();
+}
+
+class _EditProfileState extends State<EditProfile> {
+
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController contactController = new TextEditingController();
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController bioController = new TextEditingController();
+  TextEditingController locationController = new TextEditingController();
+
+  addToSF() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    // if(emailController.text.toString() != null){
+    pref.setString("nameStu", emailController.text.toString());
+    // if(locationController.text.toString() != null){
+    pref.setString("locationStu", locationController.text.toString());
+    // if(nameController.text.toString() != null){
+    pref.setString("emailStu", nameController.text.toString());
+    // if(contactController.text.toString() != null){
+    pref.setString("contactStu", contactController.text.toString());
+    // if(bioController.text.toString() != null){
+    pref.setString("aboutStu", bioController.text.toString());
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +105,8 @@ class EditProfile extends StatelessWidget{
                 child: Material(
                   elevation: 30,
                   borderRadius: BorderRadius.circular(30),
-                  child: TextField(
+                  child: TextFormField(
+                    controller: bioController,
                     keyboardType: TextInputType.multiline,
                     maxLines: 3,
                     decoration: InputDecoration(
@@ -90,7 +120,7 @@ class EditProfile extends StatelessWidget{
                         borderSide: BorderSide(color: Colors.white),
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      hintText: 'This where the user will put few lines of bio. Tap here to edit the details.',
+                      hintText: 'Tap here to edit your bio.',
                       //prefixText: 'This where the user will put few lines of bio. Tap here to edit the details.',
                     ),
                   ),
@@ -104,7 +134,8 @@ class EditProfile extends StatelessWidget{
               child: Material(
                 elevation: 30,
                 borderRadius: BorderRadius.circular(20),
-                child: TextField(
+                child: TextFormField(
+                  controller: nameController,
                   decoration: InputDecoration(
                     fillColor: Colors.transparent,
                     filled: true,
@@ -132,7 +163,8 @@ class EditProfile extends StatelessWidget{
               child: Material(
                 elevation: 30,
                 borderRadius: BorderRadius.circular(20),
-                child: TextField(
+                child: TextFormField(
+                  controller: locationController,
                   decoration: InputDecoration(
                     fillColor: Colors.transparent,
                     filled: true,
@@ -144,7 +176,7 @@ class EditProfile extends StatelessWidget{
                       borderSide: BorderSide(color: Colors.white),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    hintText: 'New Delhi,Delhi',
+                    hintText: 'City,State',
                     //labelText: 'LOCATION',
                     prefixIcon: Icon(Icons.my_location),
                   ),
@@ -160,8 +192,8 @@ class EditProfile extends StatelessWidget{
               child: Material(
                 elevation: 30,
                 borderRadius: BorderRadius.circular(20),
-                child: TextField(
-
+                child: TextFormField(
+                  controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     fillColor: Colors.transparent,
@@ -190,8 +222,8 @@ class EditProfile extends StatelessWidget{
               child: Material(
                 elevation: 30,
                 borderRadius: BorderRadius.circular(20),
-                child: TextField(
-
+                child: TextFormField(
+                  controller: contactController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     fillColor: Colors.transparent,
@@ -217,7 +249,8 @@ class EditProfile extends StatelessWidget{
             ),
             RaisedButton(
               onPressed: (){
-                return null;
+                addToSF();
+                Toast.show("Saved Changes!", context, duration: Toast.LENGTH_LONG);
               },
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
@@ -233,5 +266,4 @@ class EditProfile extends StatelessWidget{
       )
     );
   }
-
 }

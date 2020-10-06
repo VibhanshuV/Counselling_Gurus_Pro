@@ -108,10 +108,10 @@ class _SignUpPageState extends State<SignUpPage>
 
   addToSF() async{
     SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString("email", emailController.text.toString());
-    pref.setString("password", passwordController.text.toString());
-    pref.setString("name", nameController.text.toString());
-    pref.setString("contact", contactController.text.toString());
+    pref.setString("emailStu", emailController.text.toString());
+    pref.setString("passwordStu", passwordController.text.toString());
+    pref.setString("nameStu", nameController.text.toString());
+    pref.setString("contactStu", contactController.text.toString());
   }
 
   @override

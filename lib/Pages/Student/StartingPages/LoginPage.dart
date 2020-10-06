@@ -99,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
 
   addToSF() async{
     SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString("email", emailController.text.toString());
+    pref.setString("emailStu", emailController.text.toString());
     pref.setString("password", passwordController.text.toString());
   }
 

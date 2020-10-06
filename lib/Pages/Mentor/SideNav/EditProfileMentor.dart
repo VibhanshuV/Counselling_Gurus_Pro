@@ -2,10 +2,42 @@ import 'package:counselling_gurus/Resources/Colors.dart' as color;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toast/toast.dart';
 
 
 
-class EditProfileMentor extends StatelessWidget{
+class EditProfileMentor extends StatefulWidget{
+  @override
+  _EditProfileMentorState createState() => _EditProfileMentorState();
+}
+
+
+class _EditProfileMentorState extends State<EditProfileMentor> {
+
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController contactController = new TextEditingController();
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController bioController = new TextEditingController();
+  TextEditingController locationController = new TextEditingController();
+  TextEditingController yearController = new TextEditingController();
+  TextEditingController branchController = new TextEditingController();
+  TextEditingController collegeController = new TextEditingController();
+
+
+  addToSF() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString("nameMent", emailController.text.toString());
+    pref.setString("locationMent", locationController.text.toString());
+    pref.setString("emailMent", nameController.text.toString());
+    pref.setString("contactMent", contactController.text.toString());
+    pref.setString("branchMent", branchController.text.toString());
+    pref.setString("yearMent", yearController.text.toString());
+    pref.setString("aboutMent", bioController.text.toString());
+    pref.setString("collegeMent", collegeController.text.toString());
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +108,8 @@ class EditProfileMentor extends StatelessWidget{
                 child: Material(
                   elevation: 30,
                   borderRadius: BorderRadius.circular(30),
-                  child: TextField(
+                  child: TextFormField(
+                    controller: bioController,
                     keyboardType: TextInputType.multiline,
                     maxLines: 3,
                     decoration: InputDecoration(
@@ -90,7 +123,7 @@ class EditProfileMentor extends StatelessWidget{
                         borderSide: BorderSide(color: Colors.white),
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      hintText: 'This where the user will put few lines of bio. Tap here to edit the details.',
+                      hintText: 'Tap here to edit your bio.',
                       //prefixText: 'This where the user will put few lines of bio. Tap here to edit the details.',
                     ),
                   ),
@@ -104,7 +137,8 @@ class EditProfileMentor extends StatelessWidget{
               child: Material(
                 elevation: 30,
                 borderRadius: BorderRadius.circular(20),
-                child: TextField(
+                child: TextFormField(
+                  controller: nameController,
                   decoration: InputDecoration(
                     fillColor: Colors.transparent,
                     filled: true,
@@ -132,7 +166,8 @@ class EditProfileMentor extends StatelessWidget{
               child: Material(
                 elevation: 30,
                 borderRadius: BorderRadius.circular(20),
-                child: TextField(
+                child: TextFormField(
+                  controller: locationController,
                   decoration: InputDecoration(
                     fillColor: Colors.transparent,
                     filled: true,
@@ -144,7 +179,7 @@ class EditProfileMentor extends StatelessWidget{
                       borderSide: BorderSide(color: Colors.white),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    hintText: 'New Delhi,Delhi',
+                    hintText: 'City,State',
                     //labelText: 'LOCATION',
                     prefixIcon: Icon(Icons.my_location),
                   ),
@@ -160,8 +195,8 @@ class EditProfileMentor extends StatelessWidget{
               child: Material(
                 elevation: 30,
                 borderRadius: BorderRadius.circular(20),
-                child: TextField(
-
+                child: TextFormField(
+                  controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     fillColor: Colors.transparent,
@@ -190,8 +225,8 @@ class EditProfileMentor extends StatelessWidget{
               child: Material(
                 elevation: 30,
                 borderRadius: BorderRadius.circular(20),
-                child: TextField(
-
+                child: TextFormField(
+                  controller: contactController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     fillColor: Colors.transparent,
@@ -213,11 +248,99 @@ class EditProfileMentor extends StatelessWidget{
               )
             ),
             SizedBox(
+              height: 20,
+            ),
+            Padding(
+                padding: EdgeInsets.only(left: 30,right: 30),
+                child: Material(
+                  elevation: 30,
+                  borderRadius: BorderRadius.circular(20),
+                  child: TextFormField(
+                    controller: collegeController,
+                    decoration: InputDecoration(
+                      fillColor: Colors.transparent,
+                      filled: true,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      hintText: 'College',
+                      // labelText: 'CONTACT',
+                      prefixIcon: Icon(Icons.phone_android),
+                    ),
+
+                  ),
+                )
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+                padding: EdgeInsets.only(left: 30,right: 30),
+                child: Material(
+                  elevation: 30,
+                  borderRadius: BorderRadius.circular(20),
+                  child: TextFormField(
+                    controller: branchController,
+                    decoration: InputDecoration(
+                      fillColor: Colors.transparent,
+                      filled: true,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      hintText: 'Your Branch',
+                      // labelText: 'CONTACT',
+                      prefixIcon: Icon(Icons.phone_android),
+                    ),
+
+                  ),
+                )
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+                padding: EdgeInsets.only(left: 30,right: 30),
+                child: Material(
+                  elevation: 30,
+                  borderRadius: BorderRadius.circular(20),
+                  child: TextFormField(
+                    controller: yearController,
+                    decoration: InputDecoration(
+                      fillColor: Colors.transparent,
+                      filled: true,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      hintText: 'Current Year',
+                      // labelText: 'CONTACT',
+                      prefixIcon: Icon(Icons.phone_android),
+                    ),
+
+                  ),
+                )
+            ),
+            SizedBox(
               height: 30,
             ),
             RaisedButton(
               onPressed: (){
-                return null;
+                addToSF();
+                Toast.show("Saved Changes!", context, duration: Toast.LENGTH_LONG);
               },
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
@@ -233,5 +356,4 @@ class EditProfileMentor extends StatelessWidget{
       )
     );
   }
-
 }

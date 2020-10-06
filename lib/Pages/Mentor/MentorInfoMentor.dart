@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/io_client.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import '../../Resources/Colors.dart' as color;
 import 'StartingPages/LogInMentor.dart';
@@ -78,6 +79,13 @@ class _MentorInfoMentor extends State<MentorInfoMentor> {
       }
     }).catchError((error) =>
         Toast.show("Server Error!", context, duration: Toast.LENGTH_LONG));
+  }
+
+  addToSF() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString("branchMent", _controller.text.toString());
+    pref.setString("collegeMent", _controller1.text.toString());
+    pref.setString("yearMent", clgYear);
   }
 
   @override

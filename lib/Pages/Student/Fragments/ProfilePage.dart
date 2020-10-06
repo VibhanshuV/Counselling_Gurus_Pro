@@ -6,6 +6,9 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../Resources/Colors.dart' as color;
 
+
+final prefs = SharedPreferences.getInstance();
+
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => new _ProfilePageState();
@@ -13,13 +16,13 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
 
-  String email, name, contact;
+  String email, name, contact,location,about;
   JsonDecoder jsonDecoder = new JsonDecoder();
   Map<String, dynamic> jsonData;
   bool loader = false;
 
-//  getUserData() async{
-//    SharedPreferences prefs = await SharedPreferences.getInstance();
+  getUserData() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 //    email = prefs.getString('email');
 //    if(prefs.getString('name') == null || prefs.getString('name').isEmpty ||
 //        prefs.getString('email') == null || prefs.getString('email').isEmpty ||
@@ -45,19 +48,20 @@ class _ProfilePageState extends State<ProfilePage> {
 //        throw Exception('Failed to load data');
 //      }
 //    }else{
-//      setState(() {
-//        name = prefs.getString('name');
-//        email = prefs.getString('email');
-//        contact = prefs.getString('contact');
-//        loader = false;
-//      });
+     setState(() {
+       name = prefs.getString('nameStu') ?? "update name!";
+       email = prefs.getString('emailStu') ?? "email";
+       contact = prefs.getString('contactStu') ?? "Please update contact!";
+       location = prefs.getString('locationStu') ?? "update location!";
+       about = prefs.getString('aboutStu') ?? "Please update bio!";
+     });
 //    }
-//  }
+ }
 
   @override
   void initState() {
 //    loader = true;
-//    getUserData();
+    getUserData();
     super.initState();
   }
 
@@ -115,15 +119,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         ListTile(
                           title:Center(
-                            child: Text("name" ,style: GoogleFonts.aBeeZee(fontSize: 20,fontWeight: FontWeight.bold),),
+                            child: Text(name ,style: GoogleFonts.aBeeZee(fontSize: 20,fontWeight: FontWeight.bold),),
                              ),
                            subtitle: Center(
-                             child: Text('City,State',style: GoogleFonts.aBeeZee(fontSize: 15,fontWeight: FontWeight.w300),),
+                             child: Text(location,style: GoogleFonts.aBeeZee(fontSize: 15,fontWeight: FontWeight.w300),),
                            ),
 
                         ),
                         ListTile(
-                          title: Text('This is where we can put a few lines of bio which user will input.',style: GoogleFonts.aBeeZee(fontSize: 15,fontWeight: FontWeight.w300),),
+                          title: Text(about,style: GoogleFonts.aBeeZee(fontSize: 15,fontWeight: FontWeight.w300),),
                           contentPadding: EdgeInsets.only(left: 50,right: 50),
 
                         )
@@ -169,7 +173,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: ListTile(
                 contentPadding: EdgeInsets.only(left: 50,right: 50),
                 leading: Icon(Icons.email,color: Colors.white,),
-                title: Text("Email" ,style: GoogleFonts.aBeeZee(fontWeight: FontWeight.bold,fontSize: 15,color: Colors.white),),
+                title: Text(email ,style: GoogleFonts.aBeeZee(fontWeight: FontWeight.bold,fontSize: 15,color: Colors.white),),
               ),
             ),
           ),
@@ -181,7 +185,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: ListTile(
                 contentPadding: EdgeInsets.only(left: 50,right: 50),
                 leading: Icon(Icons.phone_android,color: Colors.white,),
-                title: Text( "Contact",style: GoogleFonts.aBeeZee(fontWeight: FontWeight.bold,fontSize: 15,color: Colors.white),),
+                title: Text(contact,style: GoogleFonts.aBeeZee(fontWeight: FontWeight.bold,fontSize: 15,color: Colors.white),),
             ),
             ),
           )

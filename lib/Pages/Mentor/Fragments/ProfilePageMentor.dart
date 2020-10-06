@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:counselling_gurus/Resources/Colors.dart' as color;
+import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:http/http.dart' as http;
 //import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,55 +14,60 @@ class ProfilePageMentor extends StatefulWidget {
 
 class _ProfilePageMentorState extends State<ProfilePageMentor> {
 
-  /*String email, name, contact;
-  JsonDecoder jsonDecoder = new JsonDecoder();
-  Map<String, dynamic> jsonData;
-  bool loader = false;
+  String email, name, contact, branch, college,year,location,about;
+  // JsonDecoder jsonDecoder = new JsonDecoder();
+  // Map<String, dynamic> jsonData;
+  // bool loader = false;
 
   getUserData() async{
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    email = prefs.getString('email');
-    if(prefs.getString('name') == null || prefs.getString('name').isEmpty ||
-        prefs.getString('email') == null || prefs.getString('email').isEmpty ||
-        prefs.getString('contact') == null || prefs.getString('contact').isEmpty){
-
-      Uri uri = Uri.parse('http://192.168.43.70:3060/getuserdataapp/$email');
-      http.Response response = await http.get(uri, headers: {"Accept": "application/json"});
-      print(response.body);
-      if(response.statusCode == 200){
-        setState(() {
-          jsonData = jsonDecoder.convert(response.body);
-          prefs.setString('name', name);
-          prefs.setString('email', email);
-          prefs.setString('contact', contact);
-          setState(() {
-            email = jsonData['email'];
-            name = jsonData['name'];
-            contact = jsonData['contact'];
-            loader = false;
-          });
-        });
-      }else{
-        throw Exception('Failed to load data');
-      }
-    }else{
+    // email = prefs.getString('email');
+    // if(prefs.getString('name') == null || prefs.getString('name').isEmpty ||
+    //     prefs.getString('email') == null || prefs.getString('email').isEmpty ||
+    //     prefs.getString('contact') == null || prefs.getString('contact').isEmpty){
+    //
+    //   Uri uri = Uri.parse('http://192.168.43.70:3060/getuserdataapp/$email');
+    //   http.Response response = await http.get(uri, headers: {"Accept": "application/json"});
+    //   print(response.body);
+    //   if(response.statusCode == 200){
+    //     setState(() {
+    //       jsonData = jsonDecoder.convert(response.body);
+    //       prefs.setString('name', name);
+    //       prefs.setString('email', email);
+    //       prefs.setString('contact', contact);
+    //       setState(() {
+    //         email = jsonData['email'];
+    //         name = jsonData['name'];
+    //         contact = jsonData['contact'];
+    //         loader = false;
+    //       });
+    //     });
+    //   }else{
+    //     throw Exception('Failed to load data');
+    //   }
+    // }else{
       setState(() {
-        name = prefs.getString('name');
-        email = prefs.getString('email');
-        contact = prefs.getString('contact');
-        loader = false;
+        name = prefs.getString('nameMent') ?? "update name!";
+        email = prefs.getString('emailMent') ?? "email";
+        contact = prefs.getString('contactMent') ?? "Please update contact!";
+        branch = prefs.getString('branchMent') ?? "Please update branch!";
+        college = prefs.getString('collegeMent') ?? "Please update college!";
+        year = prefs.getString('yearMent') ?? "Please update year!";
+        location = prefs.getString('locationMent') ?? "update location!";
+        about = prefs.getString('aboutMent') ?? "Please update bio!";
+
+        // loader = false;
       });
-    }
+    // }
   }
 
   @override
   void initState() {
-    loader = true;
     getUserData();
     super.initState();
   }
-*/
+
   @override
   Widget build(BuildContext context) {
     return /*loader ? Center(
@@ -104,19 +110,21 @@ class _ProfilePageMentorState extends State<ProfilePageMentor> {
                           ),
                           ListTile(
                             title:Center(
-                              child: Text("name", style: GoogleFonts.aBeeZee(
+                              child: Text(name, style: GoogleFonts.aBeeZee(
                                   fontSize: 20, fontWeight: FontWeight.bold),),
                             ),
                             subtitle: Center(
-                              child: Text('City,State',style: GoogleFonts.aBeeZee(fontSize: 15,fontWeight: FontWeight.w300),),
+                              child: Text(location,style: GoogleFonts.aBeeZee(fontSize: 15,fontWeight: FontWeight.w300),),
                             ),
 
                           ),
                             ListTile(
-                              title: Text(
-                                'This is where we can put a few lines of bio which user will input.',
-                                style: GoogleFonts.aBeeZee(fontSize: 15,
-                                    fontWeight: FontWeight.w300),),
+                              title: Center(
+                                child: Text(
+                                  about,
+                                  style: GoogleFonts.aBeeZee(fontSize: 15,
+                                      fontWeight: FontWeight.w300),),
+                              ),
                               contentPadding: EdgeInsets.only(
                                   left: 50, right: 50),
 
@@ -158,55 +166,60 @@ class _ProfilePageMentorState extends State<ProfilePageMentor> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
               child: Card(
+                color: Color(0xFFFF4E00),
                 elevation: 10,
                 child: ListTile(
                   contentPadding: EdgeInsets.only(left: 50,right: 50),
                   leading: Icon(Icons.email,color: Colors.black,),
-                  title: Text('email' ,style: GoogleFonts.aBeeZee(fontWeight: FontWeight.w300,fontSize: 15),),
+                  title: Text(email ,style: GoogleFonts.aBeeZee(fontWeight: FontWeight.w300,fontSize: 15),),
                 ),
               ),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
               child: Card(
+                color: Color(0xFFFF4E00),
                 elevation: 10,
                 child: ListTile(
                   contentPadding: EdgeInsets.only(left: 50,right: 50),
                   leading: Icon(Icons.phone_android,color: Colors.black,),
-                  title: Text('contact' ,style: GoogleFonts.aBeeZee(fontWeight: FontWeight.w300,fontSize: 15),),
+                  title: Text(contact ,style: GoogleFonts.aBeeZee(fontWeight: FontWeight.w300,fontSize: 15),),
                 ),
               ),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
               child: Card(
+                color: Color(0xFFFF4E00),
                 elevation: 10,
                 child: ListTile(
                   contentPadding: EdgeInsets.only(left: 50,right: 50),
                   leading: Icon(Icons.home,color: Colors.black,),
-                  title: Text('college' ,style: GoogleFonts.aBeeZee(fontWeight: FontWeight.w300,fontSize: 15),),
+                  title: Text(college ,style: GoogleFonts.aBeeZee(fontWeight: FontWeight.w300,fontSize: 15),),
                 ),
               ),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
               child: Card(
+                color: Color(0xFFFF4E00),
                 elevation: 10,
                 child: ListTile(
                   contentPadding: EdgeInsets.only(left: 50,right: 50),
                   leading: Icon(Icons.note_add,color: Colors.black,),
-                  title: Text('branch' ,style: GoogleFonts.aBeeZee(fontWeight: FontWeight.w300,fontSize: 15),),
+                  title: Text(branch ,style: GoogleFonts.aBeeZee(fontWeight: FontWeight.w300,fontSize: 15),),
                 ),
               ),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
               child: Card(
+                color: Color(0xFFFF4E00),
                 elevation: 10,
                 child: ListTile(
                   contentPadding: EdgeInsets.only(left: 50,right: 50),
                   leading: Icon(Icons.edit_attributes,color: Colors.black,),
-                  title: Text('year' ,style: GoogleFonts.aBeeZee(fontWeight: FontWeight.w300,fontSize: 15),),
+                  title: Text(year ,style: GoogleFonts.aBeeZee(fontWeight: FontWeight.w300,fontSize: 15),),
                 ),
               ),
             )

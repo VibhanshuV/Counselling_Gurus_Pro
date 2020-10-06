@@ -103,8 +103,8 @@ class _LoginMentorState extends State<LogInMentor> {
 
   addToSF() async{
     SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString("email", emailController.text.toString());
-    pref.setString("password", passwordController.text.toString());
+    pref.setString("emailMent", emailController.text.toString());
+    pref.setString("passwordMent", passwordController.text.toString());
   }
   @override
   Widget build(BuildContext context) {

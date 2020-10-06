@@ -84,6 +84,14 @@ signUpUser() async{
     emailController.dispose();
     passwordController.dispose();
   } */
+  addToSF() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString("emailMent", emailController.text.toString());
+    pref.setString("aadharMent", aadharController.text.toString());
+    pref.setString("nameMent", nameController.text.toString());
+    pref.setString("contactMent", contactController.text.toString());
+    pref.setString("collegeIDMent", collegeIdController.text.toString());
+  }
 
   String emailValidator(String value) {
     Pattern pattern =
